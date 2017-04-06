@@ -37,17 +37,14 @@
             if( charCode > 122 ){
                 len  = len + 2;
             }else{
-                console.log( len )
                 len ++;
             }
         };
 
         if( len > 16  || value === "" ){
             document.querySelector("#name").className = "clear red"
-            doc.namePro.style.display = "block";
         }else{
             document.querySelector("#name").className = "clear green"
-            doc.namePro.style.display = "none";
         }
 
     };
@@ -57,10 +54,8 @@
         var value = doc.ageIpt.value;
         if( value === "" ){
             document.querySelector("#age").className = "clear red"
-            doc.agePro.style.display = "block";
         }else{
             document.querySelector("#age").className = "clear green"
-            doc.agePro.style.display = "none";
         }
     };
 
@@ -69,10 +64,8 @@
         var value = doc.jobIpt.value;
         if( value === "" ){
             document.querySelector("#job").className = "clear red"
-            doc.jobPro.style.display = "block";
         }else{
             document.querySelector("#job").className = "clear green"
-            doc.jobPro.style.display = "none";
         }
     };
 
