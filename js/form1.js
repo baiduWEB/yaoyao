@@ -87,3 +87,9 @@
     };
 
 })(window);
+
+$("ul li").on( "click" , function(){
+    $("#id div").hide()
+    $("#id div").eq( $(this).index()).show();
+
+})
