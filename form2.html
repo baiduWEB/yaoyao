@@ -84,58 +84,108 @@
         padding: 5px 15px;
         margin-left: 660px;
     }
-    .false .text input{
+    .red .text input{
         border-color: #D50110
     }
-    .false .promit{
+    .red .promit{
         color: #D50110;
     }
-    .true .text input{
+    .green .text input{
         border-color:#63BB53;
     }
-    .true .promit{
+    .green .promit{
         color:#63BB53;
     }
 </style>
 <body>
 
-<form class="form">
+<form class="form" id="form2">
 
     <ul>
-        <li class="clear" id="name">
+        <li class="clear name">
             <span class="title">名称</span>
             <div class="text"><input type="text"></div>
-            <div class="promit">必填，长度为4～16个字符</div>
+            <div class="promit"></div>
         </li>
-        <li class="clear" id="passWord">
+        <li class="clear passWord">
             <span class="title">密码</span>
             <div class="text"><input type="text"></div>
-            <div class="promit">姓名不能为空</div>
+            <div class="promit"></div>
         </li>
-        <li class="clear" id="isPassWord">
+        <li class="clear isPassWord">
             <span class="title">确认密码</span>
             <div class="text"><input type="text"></div>
-            <div class="promit">名称格式正确</div>
+            <div class="promit"></div>
         </li>
-        <li class="clear" id="email">
+        <li class="clear email">
             <span class="title">邮箱</span>
             <div class="text"><input type="text"></div>
-            <div class="promit">名称格式正确</div>
+            <div class="promit"></div>
         </li>
-        <li class="clear" id="phone">
+        <li class="clear phone">
             <span class="title">手机</span>
             <div class="text"><input type="text"></div>
-            <div class="promit">名称格式正确</div>
+            <div class="promit"></div>
         </li>
-        <li class="clear" id="subimit">
-            <button class="sub" type="submit">提交</button>
+        <li class="clear subimit">
+            <input class="sub" type="submit" value="提交">
         </li>
     </ul>
+</form>
+<form class="form" id="form1">
 
-
-
+    <ul>
+        <li class="clear name">
+            <span class="title">名称</span>
+            <div class="text"><input type="text"></div>
+            <div class="promit"></div>
+        </li>
+        <li class="clear passWord">
+            <span class="title">密码</span>
+            <div class="text"><input type="text"></div>
+            <div class="promit"></div>
+        </li>
+        <li class="clear isPassWord">
+            <span class="title">确认密码</span>
+            <div class="text"><input type="text"></div>
+            <div class="promit"></div>
+        </li>
+        <li class="clear email">
+            <span class="title">邮箱</span>
+            <div class="text"><input type="text"></div>
+            <div class="promit"></div>
+        </li>
+        <li class="clear phone">
+            <span class="title">手机</span>
+            <div class="text"><input type="text"></div>
+            <div class="promit"></div>
+        </li>
+        <li class="clear subimit">
+            <input class="sub" type="submit" value="提交">
+        </li>
+    </ul>
 </form>
 
 </body>
 <script src="js/form2.js"></script>
+<script>
+
+   $("#form2").form(function( status , data  ){
+
+       if( status ){
+           alert("成功")
+       }else{
+           alert("失败")
+       }
+
+       return false;
+
+   });
+   $("#form1").form(function( status , data  ){
+
+       alert( status );
+       return false;
+
+   });
+</script>
 </html>
