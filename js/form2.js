@@ -53,7 +53,9 @@
         var id = document.querySelector( obj );
 
         if( id.getAttribute("formS") !== null ){
-            return true
+            return {
+                form : function(){}
+            };
         }else{
             id.setAttribute("formS", true)
             return new Form( id );
