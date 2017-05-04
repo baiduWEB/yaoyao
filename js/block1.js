@@ -95,67 +95,101 @@
             //创建UI
             this.ui();
 
-            //键盘事件
-            document.onkeydown = _this.keydown;
-
-        },
-
-        keydown : function( ev ){
-
-            var rol = 90;
-            arguments.callee["angle"] = !arguments.callee["angle"] ? 0 : arguments.callee["angle"] ;
-            arguments.callee["index"] = !arguments.callee["index"] ? 0 : arguments.callee["index"];
+            var width = _this.settings.width;
+            var height = _this.settings.height;
+            var currentX = _this.settings.currentX;
+            var currentY = _this.settings.currentY;
+            var speed = 50;
+            var rol = 90; //旋转犄角
+            var angle = 0; //角度
             var div = document.querySelector(".moveBlock");
-            var x = div.offsetLeft;
-            var y = div.offsetTop;
 
-            var keyCode = ev.keyCode;
-            var num = ( arguments.callee["angle"] % 360 + 360 ) % 360 / 90;
+            //动作队列;
+            var animate = [];
 
-            if( keyCode === 37 ){
-                arguments.callee["index"] --;
-
-            }else if( keyCode === 38 ){
-                arguments.callee["index"] += 0 ;
-                if( num === 0 ){
-                    y = y - 50;
-                }else if( num === 1 ){
-                   x =  x + 50;
-                }else if( num === 2 ){
-                    y = y + 50;
-                }else if( num === 3 ){
-                    x = x - 50
+            function animation(){
+                for(var i=0; i<animate.length; i++){
+                    if( animate[i].name === "rotate" ){
+                        div.style.transform = "rotate("+animate[i].value+"deg)";
+                    }else{
+                        div.style[ animate[i].name ] =  animate[i].value + "px";
+                    }
                 };
-
-                if( x < 0 ){
-                    x = 0;
-                }else if(x > 450 ){
-                    x = 450
-                };
-
-                if( y < 0 ){
-                    y = 0 ;
-                }else if( y > 450){
-                    y = 450;
-                }
-
-                div.style.left = x + "px";
-                div.style.top = y + "px";
-
-
-            }else if( keyCode === 39 ){
-                arguments.callee["index"] ++;
-
-            }else if( keyCode === 40 ){
-                arguments.callee["index"] += 2;
-
-            }else{
-                return;
+                animate = [];
             };
 
+            //限制
+            function xz( target , value ){
 
-            arguments.callee["angle"] = arguments.callee["index"] * rol;
-            div.style.transform = "rotate("+arguments.callee["angle"]+"deg)";
+                if( currentX < 0 ){
+                    currentX = 0 ;
+                }else if( currentX > 450){
+                    currentX = 450;
+                };
+                if( currentY < 0 ){
+                    currentY = 0 ;
+                }else if( currentY > 450){
+                    currentY = 450;
+                };
+                if( value < 0 ){
+                    value = 0 ;
+                }else if( value > 450){
+                    value = 450;
+                }
+                animate.push({
+                    "name" : target,
+                    "value" : value
+                })
+            }
+
+            //键盘事件
+            document.onkeydown = function( ev ){
+                var ev = ev || event;
+
+                var keyCode = ev.keyCode;
+
+                if( keyCode === 37 ){
+                    angle = angle - 90;
+                    animate.push( {
+                        "name" : "rotate",
+                        "value" : angle
+                    });
+                }else if( keyCode === 38 ){
+                    ev.preventDefault();
+                    angle = angle + 0 ;
+                }else if( keyCode === 39 ){
+                    angle = angle + 90;
+                    animate.push( {
+                        "name" : "rotate",
+                        "value" : angle
+                    });
+                }else if( keyCode === 40 ){
+                    angle = angle + 180;
+                    animate.push( {
+                        "name" : "rotate",
+                        "value" : angle
+                    });
+                    ev.preventDefault();
+                };
+
+                var num = ( angle % 360 + 360 ) % 360 / 90;
+
+                if( num === 0 ){
+                    currentY = currentY - speed;
+                    xz( "top" , currentY );
+                }else if( num === 1 ){
+                    currentX =  currentX + 50;
+                    xz( "left" , currentX );
+                }else if( num === 2 ){
+                    currentY = currentY + 50;
+                    xz( "top" , currentY );
+                }else if( num === 3 ){
+                    currentX = currentX - 50;
+                    xz( "left" , currentX );
+                };
+
+                animation();
+            };
 
         },
 
